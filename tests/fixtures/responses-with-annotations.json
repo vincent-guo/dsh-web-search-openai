@@ -1,0 +1,37 @@
+{
+ "output": [
+  {
+   "type": "web_search_call",
+   "status": "completed",
+   "action": {
+    "type": "search",
+    "query": "深圳 今日 天气"
+   }
+  },
+  {
+   "type": "message",
+   "role": "assistant",
+   "content": [
+    {
+     "type": "output_text",
+     "text": "根据检索结果，模型生成的示例回答正文[1]。",
+     "annotations": [
+      {
+       "type": "url_citation",
+       "index": 1,
+       "url": "https://example.com/source/1",
+       "title": "示例来源标题",
+       "start_index": 18,
+       "end_index": 21
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "usage": {
+  "tool_usage": {
+   "web_search_call": 1
+  }
+ }
+}

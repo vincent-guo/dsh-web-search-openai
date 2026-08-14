@@ -1,0 +1,8 @@
+node_modules/
+lib/
+coverage/
+*.jsonl
+*.log
+.DS_Store
+.npm-cache/
+.npm-logs/

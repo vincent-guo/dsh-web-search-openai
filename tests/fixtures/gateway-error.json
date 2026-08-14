@@ -1,0 +1,10 @@
+{
+ "error": {
+  "type": "invalid_request_error",
+  "code": "400001",
+  "message": "The request is invalid: 'reasoning_effort' must be one of: 'low', 'medium', 'high', 'xhigh', 'max'.",
+  "message_zh": "请求不合法",
+  "source": "client",
+  "request_id": "e057f005"
+ }
+}
