@@ -16,7 +16,7 @@
 ## 安装
 
 ```sh
-npm install dsh-web-search-openai
+npm install @vincent-guo/dsh-web-search-openai
 ```
 
 peer 依赖（`@deepseek-ai/dsh-web@0.1.0-rc.6`、`@deepseek-ai/cordis@^4.0.1`）由 harness 安装提供；请把本包装进同一 profile/工作区，保证与 harness 共享同一份模块实例。
@@ -27,7 +27,7 @@ peer 依赖（`@deepseek-ai/dsh-web@0.1.0-rc.6`、`@deepseek-ai/cordis@^4.0.1`�
 
 ```yaml
 - id: web-search-openai
-  name: 'dsh-web-search-openai'
+  name: '@vincent-guo/dsh-web-search-openai'
   config:
     apiKeyEnv: TENCENT_TOKENHUB_API_KEY   # 每次搜索即时解析的凭据引用
     baseURL: https://<你的网关>/v1        # 自动追加 /chat/completions 或 /responses

@@ -16,7 +16,7 @@ It is a **third-party** package, not affiliated with DeepSeek. It targets `@deep
 ## Install
 
 ```sh
-npm install dsh-web-search-openai
+npm install @vincent-guo/dsh-web-search-openai
 ```
 
 Peer dependencies (`@deepseek-ai/dsh-web@0.1.0-rc.6`, `@deepseek-ai/cordis@^4.0.1`) are supplied by the harness installation; install the package into the same profile/workspace so a single instance is shared.
@@ -27,7 +27,7 @@ Every provider-specific field is required — no vendor defaults exist. Fill in 
 
 ```yaml
 - id: web-search-openai
-  name: 'dsh-web-search-openai'
+  name: '@vincent-guo/dsh-web-search-openai'
   config:
     apiKeyEnv: TENCENT_TOKENHUB_API_KEY   # credential reference resolved per search
     baseURL: https://<your-gateway>/v1    # /chat/completions or /responses is appended
