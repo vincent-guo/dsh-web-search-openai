@@ -19,7 +19,7 @@
 npm install @vincent-guo/dsh-web-search-openai
 ```
 
-peer 依赖（`@deepseek-ai/dsh-web@0.1.0-rc.6`、`@deepseek-ai/cordis@^4.0.1`）由 harness 安装提供；请把本包装进同一 profile/工作区，保证与 harness 共享同一份模块实例。
+peer 依赖（`@deepseek-ai/dsh-web@0.1.0-rc.6`、`@deepseek-ai/dsh-session@^0.1.0-rc.6`、`@deepseek-ai/cordis@^4.0.1`）由 harness 安装提供；请把本包装进同一 profile/工作区，保证与 harness 共享同一份模块实例。
 
 ## 配置
 
@@ -74,7 +74,9 @@ Chat Completions 的联网搜索开关是厂商扩展，不属于 OpenAI 规范�
 
 ## 辅助请求日志
 
-由 agent 会话发起的搜索，会在发请求前向会话追加 `web/openai-search-request` 事件，携带已解析端点与不含凭据的完整请求体。
+由 agent 会话发起的搜索，会在发请求前向会话记录一条 `web/openai-search-request` 事件，携带已解析端点与不含凭据的完整请求体。该事件纯属信息性，追加时带有 `ignorable` 标记，不认识该类型的读取端可安全跳过。
+
+每个 harness 构建都携带一份静态的会话事件词表（`KNOWN_SESSION_EVENT_TYPES`），并拒绝冷加载包含"未知且非 ignorable"事件类型的日志。因此本事件**仅在运行中构建的词表已包含该类型时才追加**；在早于该类型的构建（如 `dsh-web@0.1.0-rc.6`）上会跳过追加，保证会话日志在任何构建上都能加载。
 
 ## 模型体验
 

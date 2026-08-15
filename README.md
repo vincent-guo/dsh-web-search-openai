@@ -19,7 +19,7 @@ It is a **third-party** package, not affiliated with DeepSeek. It targets `@deep
 npm install @vincent-guo/dsh-web-search-openai
 ```
 
-Peer dependencies (`@deepseek-ai/dsh-web@0.1.0-rc.6`, `@deepseek-ai/cordis@^4.0.1`) are supplied by the harness installation; install the package into the same profile/workspace so a single instance is shared.
+Peer dependencies (`@deepseek-ai/dsh-web@0.1.0-rc.6`, `@deepseek-ai/dsh-session@^0.1.0-rc.6`, `@deepseek-ai/cordis@^4.0.1`) are supplied by the harness installation; install the package into the same profile/workspace so a single instance is shared.
 
 ## Configuration
 
@@ -74,7 +74,9 @@ Provider failures surface as `WebError` with the seam's open code set: `WEB_PROV
 
 ## Auxiliary request logging
 
-When a search is initiated by an agent session, the provider appends a `web/openai-search-request` session event carrying the resolved endpoint and the exact request body (no credentials) before the request is sent.
+When a search is initiated by an agent session, the provider records a `web/openai-search-request` session event carrying the resolved endpoint and the exact request body (no credentials) before the request is sent. The event is informational only and is appended with the `ignorable` marker, so a reader that does not recognize the type skips it safely.
+
+Each harness build ships a static session-event vocabulary (`KNOWN_SESSION_EVENT_TYPES`) and refuses cold loads of logs containing unknown, non-ignorable event types. The event is therefore **only appended when the running build's vocabulary already contains the type**; on builds that predate it (e.g. `dsh-web@0.1.0-rc.6`), the append is skipped and the session log stays loadable everywhere.
 
 ## Model Experience
 

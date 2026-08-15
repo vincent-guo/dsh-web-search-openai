@@ -11,7 +11,7 @@ export interface CredentialsLike {
 
 /** Structural contract of the optional agent/session chain, used only for the auxiliary request log event. */
 export interface RequestLogLike {
-  append(name: string, data: object): void
+  append(name: string, data: object, opts?: { ignorable?: true }): void
 }
 
 export interface AgentsLike {

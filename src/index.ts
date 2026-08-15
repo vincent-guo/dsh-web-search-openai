@@ -1,5 +1,6 @@
 import z from '@deepseek-ai/schemastery'
 import { WebError } from '@deepseek-ai/dsh-web'
+import { KNOWN_SESSION_EVENT_TYPES } from '@deepseek-ai/dsh-session'
 import { COMPLETIONS_DIALECTS } from './dialect.js'
 import { COMPLETIONS_PROVIDER_ID, OpenAiSearchProvider, RESPONSES_PROVIDER_ID } from './provider.js'
 import type { AgentsLike, CredentialsLike, OpenAiSearchConfig, OpenAiSearchOptions, PluginContextLike } from './types.js'
@@ -57,9 +58,16 @@ function projectOptions(ctx: PluginContextLike, config: OpenAiSearchConfig): Ope
     timeoutMs: timeoutMs ?? 30_000,
     resolveApiKey: (signal) => resolveApiKey(ctx, apiKeyEnv, signal),
     recordRequest: (payload) => {
+      // The session reader only knows the event vocabulary compiled into each harness build
+      // (KNOWN_SESSION_EVENT_TYPES) and refuses cold loads of logs containing unknown types
+      // that are not marked ignorable. This out-of-repo type is absent from that static
+      // catalog, so appending it unconditionally poisons sessions for older readers. Record
+      // it only when the running build already knows the type; pass `ignorable` so builds
+      // that support the envelope marker keep tolerating the record.
+      if (!KNOWN_SESSION_EVENT_TYPES.has('web/openai-search-request')) return
       const agents = ctx.get('agents') as AgentsLike | undefined
       const session = agents?.currentInitiator()?.session
-      session?.append('web/openai-search-request', payload)
+      session?.append('web/openai-search-request', payload, { ignorable: true })
     },
   }
 }
